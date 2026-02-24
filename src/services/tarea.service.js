@@ -1,4 +1,5 @@
 const API_BASE_URL = 'http://localhost:8000/api';
+const TOKEN = '5|7KnvfaVgerJP3ctjciSsD1NGKPCywQl6pnxMroPE0af9d9ea';
 
 const tareaService = {
   getAll: async () => {
@@ -7,7 +8,8 @@ const tareaService = {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json'
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${TOKEN}`
         }
       });
 

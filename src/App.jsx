@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import tareaService from './services/tarea.service';
+import Categorias from './components/Categorias';
+import  './App.css';
 
 function App() {
   const [tareas, setTareas] = useState([]);
@@ -29,7 +31,8 @@ function App() {
   }, []);
 
   return (
-      <h1>Testing Tareas</h1>
+      <h1>Testing Tareas</h1>,
+      <div className="App"><Categorias /></div>
   );
 }
 

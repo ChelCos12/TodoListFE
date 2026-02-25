@@ -40,6 +40,11 @@ function Categorias() {
     setActiveView('edit');
   };
 
+  const handleSelectDelete = (categoria) => {
+    setSelectedCategoria(categoria);
+    setActiveView('delete');
+  };
+
   const handleCreate = async (e) => {
     e.preventDefault();
     await categoriaService.create(formData);
@@ -54,6 +59,12 @@ function Categorias() {
     fetchCategorias();
   };
 
+  const handleDelete = async () => {
+    await categoriaService.delete(selectedCategoria.id);
+    handleCloseView();
+    fetchCategorias();
+  };
+
   return (
     <CategoriasView
       categorias={categorias}
@@ -63,7 +74,9 @@ function Categorias() {
       onInputChange={handleInputChange}
       onCreate={handleCreate}
       onEdit={handleEdit}
+      onDelete={handleDelete}
       onSelectEdit={handleSelectEdit}
+      onSelectDelete={handleSelectDelete}
       onCloseView={handleCloseView}
     />
   );

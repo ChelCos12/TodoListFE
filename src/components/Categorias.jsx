@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import categoriaService from '../services/categoria.service';
+import { getAll } from '../services/categoria.service';
 
 function Categorias() {
   const [categorias, setCategorias] = useState([]);
@@ -8,7 +8,7 @@ function Categorias() {
 
   const fetchCategorias = async () => {
       setLoading(true);
-      const response = await categoriaService.getAll();
+      const response = await getAll();
       setCategorias(response.data);
       setError(null);
   };

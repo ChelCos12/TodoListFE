@@ -6,57 +6,12 @@ const getHeaders = () => ({
   'Authorization': `Bearer ${TOKEN}`
 });
 
-const categoriaService = {
-  getAll: async () => {
-      const response = await fetch(`${API_BASE_URL}/categorias`, {
-        method: 'GET',
-        headers: getHeaders()
-      });
-      const data = await response.json();
-      return data;
-  },
+export const getAll = async () => {
+  const response = await fetch(`${API_BASE_URL}/categorias`, {
+    method: "GET",
+    headers: getHeaders(),
+  });
 
-  getOne: async (id) => {
-      const response = await fetch(`${API_BASE_URL}/categorias/${id}`, {
-        method: 'GET',
-        headers: getHeaders()
-      });
-      const data = await response.json();
-      return data;
-  },
-
-  create: async (categoria) => {
-      const response = await fetch(`${API_BASE_URL}/categorias`, {
-        method: 'POST',
-        headers: getHeaders(),
-        body: JSON.stringify(categoria)
-      });
-
-
-      const data = await response.json();
-      return data;
-  },
-
-  update: async (id, categoria) => {
-      const response = await fetch(`${API_BASE_URL}/categorias/${id}`, {
-        method: 'PUT',
-        headers: getHeaders(),
-        body: JSON.stringify(categoria)
-      });
-
-      const data = await response.json();
-      return data;
-  },
-
-  delete: async (id) => {
-      const response = await fetch(`${API_BASE_URL}/categorias/${id}`, {
-        method: 'DELETE',
-        headers: getHeaders()
-      });
-
-      const data = await response.json();
-      return data;
-  }
+  const data = await response.json();
+  return data;
 };
-
-export default categoriaService;

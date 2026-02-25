@@ -1,19 +1,25 @@
 import styles from './Categorias.module.css';
 import CategoriaCreate from './CategoriaCreate';
+import CategoriaEdit from './CategoriaEdit';
 
 function CategoriasView({
   categorias,
-  showCreate,
+  activeView,
   formData,
   onToggleCreate,
   onInputChange,
   onCreate,
+  onEdit,
+  onSelectEdit,
+  onCloseView,
 }) {
-  if (showCreate) {
-    return <CategoriaCreate formData={formData} onInputChange={onInputChange} onCreate={onCreate} onCancel={onToggleCreate} />;
-  }
-
-  return (
+  switch (activeView) {
+    case 'create':
+      return <CategoriaCreate formData={formData} onInputChange={onInputChange} onCreate={onCreate} onCancel={onCloseView} />;
+    case 'edit':
+      return <CategoriaEdit formData={formData} onInputChange={onInputChange} onEdit={onEdit} onCancel={onCloseView} />;
+    default:
+      return (
     <div>
       <h1>Categorías</h1>
 
@@ -44,9 +50,9 @@ function CategoriasView({
                   </span>
                 </td>
                 <td>
-                  <button onClick={() => onSelectCategoria(categoria, 'detail')}>Ver</button>
-                  <button onClick={() => onSelectCategoria(categoria, 'edit')}>Editar</button>
-                  <button onClick={() => onSelectCategoria(categoria, 'delete')}>Eliminar</button>
+                  <button onClick={() => (categoria, 'detail')}>Ver</button>
+                  <button onClick={() => onSelectEdit(categoria, 'edit')}>Editar</button>
+                  <button onClick={() => (categoria, 'delete')}>Eliminar</button>
                 </td>
               </tr>
             ))
@@ -55,6 +61,7 @@ function CategoriasView({
       </table>
     </div>
   );
+  }
 }
 
 export default CategoriasView;

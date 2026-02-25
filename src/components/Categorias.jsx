@@ -6,7 +6,8 @@ const EMPTY_FORM = { nombre: '', color: '#3498db' };
 
 function Categorias() {
   const [categorias, setCategorias] = useState([]);
-  const [showCreate, setShowCreate] = useState(false);
+  const [activeView, setActiveView] = useState(null);
+  const [selectedCategoria, setSelectedCategoria] = useState(null);
   const [formData, setFormData] = useState(EMPTY_FORM);
 
   useEffect(() => {
@@ -23,27 +24,47 @@ function Categorias() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleToggleCreate = () => {
-    setShowCreate(!showCreate);
+  const handleCloseView = () => {
+    setActiveView(null);
+    setSelectedCategoria(null);
     setFormData(EMPTY_FORM);
+  };
+
+  const handleToggleCreate = () => {
+    activeView === 'create' ? handleCloseView() : setActiveView('create');
+  };
+
+  const handleSelectEdit = (categoria) => {
+    setSelectedCategoria(categoria);
+    setFormData({ nombre: categoria.nombre, color: categoria.color });
+    setActiveView('edit');
   };
 
   const handleCreate = async (e) => {
     e.preventDefault();
     await categoriaService.create(formData);
-    setShowCreate(false);
-    setFormData(EMPTY_FORM);
+    handleCloseView();
+    fetchCategorias();
+  };
+
+  const handleEdit = async (e) => {
+    e.preventDefault();
+    await categoriaService.update(selectedCategoria.id, formData);
+    handleCloseView();
     fetchCategorias();
   };
 
   return (
     <CategoriasView
       categorias={categorias}
-      showCreate={showCreate}
+      activeView={activeView}
       formData={formData}
       onToggleCreate={handleToggleCreate}
       onInputChange={handleInputChange}
       onCreate={handleCreate}
+      onEdit={handleEdit}
+      onSelectEdit={handleSelectEdit}
+      onCloseView={handleCloseView}
     />
   );
 }

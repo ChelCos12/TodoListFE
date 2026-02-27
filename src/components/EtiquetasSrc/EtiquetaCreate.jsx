@@ -3,7 +3,7 @@ import styles from './Etiquetas.module.css';
 function EtiquetaCreate({ formData, onInputChange, onCreate, onCancel }) {
   return (
     <form className={styles.form} onSubmit={onCreate}>
-      <h3>Crear Nueva Etiqueta</h3>
+      <h3>Crear Nueva Categoría</h3>
 
       <div>
         <label>Nombre: <span style={{ color: 'red' }}>*</span></label>

@@ -1,23 +1,23 @@
 import { useState, useEffect } from 'react';
-import etiquetaService from '../services/etiqueta.service';
 import EtiquetasView from './EtiquetasSrc/EtiquetasView';
+import { getAll , create, update, remove} from '../services/etiqueta.service';
 
 const EMPTY_FORM = { nombre: '', color: '#3498db' };
 
-function etiquetas() {
+function Etiquetas() {
   const [etiquetas, setEtiquetas] = useState([]);
   const [activeView, setActiveView] = useState(null);
   const [selectedEtiqueta, setSelectedEtiqueta] = useState(null);
   const [formData, setFormData] = useState(EMPTY_FORM);
 
+  const fetchEtiquetas = async () => {
+      const response = await getAll();
+      setEtiquetas(response.data);
+  };
+
   useEffect(() => {
     fetchEtiquetas();
   }, []);
-
-  const fetchEtiquetas = async () => {
-    const response = await etiquetaService.getAll();
-    setEtiquetas(response.data);
-  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -53,20 +53,20 @@ function etiquetas() {
 
   const handleCreate = async (e) => {
     e.preventDefault();
-    await etiquetaService.create(formData);
+    await create(formData);
     handleCloseView();
     fetchEtiquetas();
   };
 
   const handleEdit = async (e) => {
     e.preventDefault();
-    await etiquetaService.update(selectedEtiqueta.id, formData);
+    await update(selectedEtiqueta.id, formData);
     handleCloseView();
     fetchEtiquetas();
   };
 
   const handleDelete = async () => {
-    await etiquetaService.delete(selectedEtiqueta.id);
+    await remove(selectedEtiqueta.id);
     handleCloseView();
     fetchEtiquetas();
   };
@@ -90,4 +90,4 @@ function etiquetas() {
   );
 }
 
-export default etiquetas;
+export default Etiquetas;

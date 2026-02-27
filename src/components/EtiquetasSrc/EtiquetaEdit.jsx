@@ -3,7 +3,7 @@ import styles from './Etiquetas.module.css';
 function EtiquetaEdit({ formData, onInputChange, onEdit, onCancel }) {
   return (
     <form className={styles.form} onSubmit={onEdit}>
-      <h3>Editar Etiqueta</h3>
+      <h3>Editar Categoría</h3>
 
       <div>
         <label>Nombre: <span style={{ color: 'red' }}>*</span></label>

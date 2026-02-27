@@ -47,7 +47,7 @@ function EtiquetasView({
         <tbody>
           {etiquetas.length === 0 ? (
             <tr>
-              <td colSpan="4" style={{ textAlign: 'center' }}>No hay categorías registradas</td>
+              <td colSpan="4" style={{ textAlign: 'center' }}>No hay etiquetas registradas</td>
             </tr>
           ) : (
             etiquetas.map((etiqueta) => (
@@ -60,9 +60,9 @@ function EtiquetasView({
                   </span>
                 </td>
                 <td>
-                  <button onClick={() => onSelectDetail(etiqueta, 'detail')}>Ver</button>
-                  <button onClick={() => onSelectEdit(etiqueta, 'edit')}>Editar</button>
-                  <button onClick={() => onSelectDelete(etiqueta, 'delete')}>Eliminar</button>
+                  <button onClick={() => onSelectDetail(etiqueta)}>Ver</button>
+                  <button onClick={() => onSelectEdit(etiqueta)}>Editar</button>
+                  <button onClick={() => onSelectDelete(etiqueta)}>Eliminar</button>
                 </td>
               </tr>
             ))

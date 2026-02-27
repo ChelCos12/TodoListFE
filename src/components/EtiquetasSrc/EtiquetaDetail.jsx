@@ -3,7 +3,7 @@ import styles from './Etiquetas.module.css';
 function EtiquetaDetail({ etiqueta, onClose }) {
   return (
     <div className={styles.form}>
-      <h3>Detalle de Etiqueta</h3>
+      <h3>Detalle de Categoría</h3>
       <p><strong>ID:</strong> {etiqueta?.id}</p>
       <p><strong>Nombre:</strong> {etiqueta?.nombre}</p>
       <p>

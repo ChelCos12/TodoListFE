@@ -1,44 +1,38 @@
 const API_BASE_URL = 'http://localhost:8000/api';
 const TOKEN = '5|7KnvfaVgerJP3ctjciSsD1NGKPCywQl6pnxMroPE0af9d9ea';
+const getHeaders = () => ({
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Authorization': `Bearer ${TOKEN}`
+});
 
-const tareaService = {
-  getAll: async () => {
-    try {
-      const response = await fetch(`${API_BASE_URL}/tareas`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization': `Bearer ${TOKEN}`
-        }
-      });
+export const getAll = async () => {
+  const response = await fetch(`${API_BASE_URL}/tareas`, {
+    method: "GET",
+    headers: getHeaders(),
+  });
 
-      if (!response.ok) {
-        throw new Error(`Error HTTP: ${response.status}`);
-      }
-
-      const data = await response.json();
-      return data; 
-    } catch (error) {
-      console.error('Error al obtener tareas:', error);
-      throw error;
-    }
-  },
-
-  create: async (tarea) => {
-  },
-
-  update: async (id, tarea) => {
-  },
-
-  delete: async (id) => {
-  },
-
-  getOne: async (id) => {
-  },
-
-  toggle: async (id) => {
-  }
+  const data = await response.json();
+  return data;
 };
 
-export default tareaService;
+export const create = async (formData) => {
+  const response = await fetch(`${API_BASE_URL}/tareas`, {
+    method: "POST",
+    headers: getHeaders(),
+    body: JSON.stringify(formData),
+  });
+
+  const data = await response.json();
+  return data;
+};
+
+export const toggle = async (id) => {
+  const response = await fetch(`${API_BASE_URL}/tareas/${id}/toggle`, {
+    method: 'POST',
+    headers: getHeaders(),
+  });
+
+  const data = await response.json();
+  return data;
+};

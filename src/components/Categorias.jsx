@@ -24,7 +24,6 @@ function Categorias() {
     setFormData({ ...formData, [name]: value });
   };
 
-  
   const handleCloseView = () => {
     setActiveView(null);
     setSelectedCategoria(null);

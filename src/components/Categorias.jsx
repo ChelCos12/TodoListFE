@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import categoriaService from '../services/categoria.service';
 import CategoriasView from './CategoriasSrc/CategoriasView';
+import { getAll , create, update, remove} from '../services/categoria.service';
 
 const EMPTY_FORM = { nombre: '', color: '#3498db' };
 
@@ -10,14 +10,14 @@ function Categorias() {
   const [selectedCategoria, setSelectedCategoria] = useState(null);
   const [formData, setFormData] = useState(EMPTY_FORM);
 
+  const fetchCategorias = async () => {
+      const response = await getAll();
+      setCategorias(response.data);
+  };
+
   useEffect(() => {
     fetchCategorias();
   }, []);
-
-  const fetchCategorias = async () => {
-    const response = await categoriaService.getAll();
-    setCategorias(response.data);
-  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -52,20 +52,20 @@ function Categorias() {
 
   const handleCreate = async (e) => {
     e.preventDefault();
-    await categoriaService.create(formData);
+    await create(formData);
     handleCloseView();
     fetchCategorias();
   };
 
   const handleEdit = async (e) => {
     e.preventDefault();
-    await categoriaService.update(selectedCategoria.id, formData);
+    await update(selectedCategoria.id, formData);
     handleCloseView();
     fetchCategorias();
   };
 
   const handleDelete = async () => {
-    await categoriaService.delete(selectedCategoria.id);
+    await remove(selectedCategoria.id);
     handleCloseView();
     fetchCategorias();
   };

@@ -50,7 +50,7 @@ function CategoriasView({
                   </span>
                 </td>
                 <td>
-                  <button onClick={() => onSelectEdit(categoria, 'edit')}>Editar</button>
+                  <button onClick={() => onSelectEdit(categoria)}>Editar</button>
                 </td>
               </tr>
             ))

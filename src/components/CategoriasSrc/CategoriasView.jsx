@@ -1,6 +1,7 @@
 import styles from './Categorias.module.css';
 import CategoriaCreate from './CategoriaCreate';
 import CategoriaEdit from './CategoriaEdit';
+import CategoriaDelete from './CategoriaDelete';
 
 function CategoriasView({
   categorias,
@@ -10,7 +11,9 @@ function CategoriasView({
   onInputChange,
   onCreate,
   onEdit,
+  onDelete,
   onSelectEdit,
+  onSelectDelete,
   onCloseView,
 }) {
   switch (activeView) {
@@ -18,7 +21,9 @@ function CategoriasView({
       return <CategoriaCreate formData={formData} onInputChange={onInputChange} onCreate={onCreate} onCancel={onCloseView} />;
     case 'edit':
       return <CategoriaEdit formData={formData} onInputChange={onInputChange} onEdit={onEdit} onCancel={onCloseView} />;
-    default:
+    case 'delete':
+      return <CategoriaDelete onDelete={onDelete} onCancel={onCloseView} />;
+      default:
       return (
     <div>
       <h1>Categorías</h1>
@@ -51,6 +56,7 @@ function CategoriasView({
                 </td>
                 <td>
                   <button onClick={() => onSelectEdit(categoria)}>Editar</button>
+                  <button onClick={() => onSelectDelete(categoria)}>Eliminar</button>
                 </td>
               </tr>
             ))

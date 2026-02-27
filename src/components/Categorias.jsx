@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import CategoriasView from './CategoriasSrc/CategoriasView';
-import { getAll , create, update} from '../services/categoria.service';
+import { getAll , create, update, remove} from '../services/categoria.service';
 
 const EMPTY_FORM = { nombre: '', color: '#3498db' };
 
@@ -40,6 +40,16 @@ function Categorias() {
     setActiveView('edit');
   };
 
+  const handleSelectDelete = (categoria) => {
+    setSelectedCategoria(categoria);
+    setActiveView('delete');
+  };
+
+  const handleSelectDetail = (categoria) => {
+    setSelectedCategoria(categoria);
+    setActiveView('detail');
+  };
+
   const handleCreate = async (e) => {
     e.preventDefault();
     await create(formData);
@@ -54,16 +64,26 @@ function Categorias() {
     fetchCategorias();
   };
 
+  const handleDelete = async () => {
+    await remove(selectedCategoria.id);
+    handleCloseView();
+    fetchCategorias();
+  };
+
   return (
     <CategoriasView
       categorias={categorias}
       activeView={activeView}
       formData={formData}
+      selectedCategoria={selectedCategoria}
       onToggleCreate={handleToggleCreate}
       onInputChange={handleInputChange}
       onCreate={handleCreate}
       onEdit={handleEdit}
+      onDelete={handleDelete}
       onSelectEdit={handleSelectEdit}
+      onSelectDelete={handleSelectDelete}
+      onSelectDetail={handleSelectDetail}
       onCloseView={handleCloseView}
     />
   );

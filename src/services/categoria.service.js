@@ -37,3 +37,15 @@ const response = await fetch(`${API_BASE_URL}/categorias/${id}`, {
     const data = await response.json();
     return data;
 };
+
+export const remove = async (id, formData) => {
+const response = await fetch(`${API_BASE_URL}/categorias/${id}`, {
+      method: 'DELETE',
+      headers: getHeaders(),
+      body: JSON.stringify(formData)
+    });
+
+    const data = await response.json();
+    return data;
+};
+

@@ -7,7 +7,7 @@ const getHeaders = () => ({
 });
 
 export const getAll = async () => {
-  const response = await fetch(`${API_BASE_URL}/categorias`, {
+  const response = await fetch(`${API_BASE_URL}/etiquetas`, {
     method: "GET",
     headers: getHeaders(),
   });
@@ -17,7 +17,7 @@ export const getAll = async () => {
 };
 
 export const getOne = async (id) => {
-  const response = await fetch(`${API_BASE_URL}/categorias/${id}`, {
+  const response = await fetch(`${API_BASE_URL}/etiquetas/${id}`, {
     method: "GET",
     headers: getHeaders(),
   });
@@ -27,7 +27,7 @@ export const getOne = async (id) => {
 };
 
 export const create = async (formData) => {
-  const response = await fetch(`${API_BASE_URL}/categorias`, {
+  const response = await fetch(`${API_BASE_URL}/etiquetas`, {
     method: "POST",
     headers: getHeaders(),
     body: JSON.stringify(formData),
@@ -38,7 +38,7 @@ export const create = async (formData) => {
 };
 
 export const update = async (id, formData) => {
-const response = await fetch(`${API_BASE_URL}/categorias/${id}`, {
+const response = await fetch(`${API_BASE_URL}/etiquetas/${id}`, {
       method: 'PUT',
       headers: getHeaders(),
       body: JSON.stringify(formData)
@@ -49,7 +49,7 @@ const response = await fetch(`${API_BASE_URL}/categorias/${id}`, {
 };
 
 export const remove = async (id, formData) => {
-const response = await fetch(`${API_BASE_URL}/categorias/${id}`, {
+const response = await fetch(`${API_BASE_URL}/etiquetas/${id}`, {
       method: 'DELETE',
       headers: getHeaders(),
       body: JSON.stringify(formData)

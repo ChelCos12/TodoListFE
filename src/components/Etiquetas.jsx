@@ -1,22 +1,22 @@
 import { useState, useEffect } from 'react';
-import CategoriasView from './CategoriasSrc/CategoriasView';
-import { getAll , create, update, remove} from '../services/categoria.service';
+import EtiquetasView from './EtiquetasSrc/EtiquetasView';
+import { getAll , create, update, remove} from '../services/etiqueta.service';
 
 const EMPTY_FORM = { nombre: '', color: '#3498db' };
 
-function Categorias() {
-  const [categorias, setCategorias] = useState([]);
+function Etiquetas() {
+  const [etiquetas, setEtiquetas] = useState([]);
   const [activeView, setActiveView] = useState(null);
-  const [selectedCategoria, setSelectedCategoria] = useState(null);
+  const [selectedEtiqueta, setSelectedEtiqueta] = useState(null);
   const [formData, setFormData] = useState(EMPTY_FORM);
 
-  const fetchCategorias = async () => {
+  const fetchEtiquetas = async () => {
       const response = await getAll();
-      setCategorias(response.data);
+      setEtiquetas(response.data);
   };
 
   useEffect(() => {
-    fetchCategorias();
+    fetchEtiquetas();
   }, []);
 
   const handleInputChange = (e) => {
@@ -27,7 +27,7 @@ function Categorias() {
   
   const handleCloseView = () => {
     setActiveView(null);
-    setSelectedCategoria(null);
+    setSelectedEtiqueta(null);
     setFormData(EMPTY_FORM);
   };
 
@@ -35,19 +35,19 @@ function Categorias() {
     activeView === 'create' ? handleCloseView() : setActiveView('create');
   };
 
-  const handleSelectEdit = (categoria) => {
-    setSelectedCategoria(categoria);
-    setFormData({ nombre: categoria.nombre, color: categoria.color });
+  const handleSelectEdit = (etiqueta) => {
+    setSelectedEtiqueta(etiqueta);
+    setFormData({ nombre: etiqueta.nombre, color: etiqueta.color });
     setActiveView('edit');
   };
 
-  const handleSelectDelete = (categoria) => {
-    setSelectedCategoria(categoria);
+  const handleSelectDelete = (etiqueta) => {
+    setSelectedEtiqueta(etiqueta);
     setActiveView('delete');
   };
 
-  const handleSelectDetail = (categoria) => {
-    setSelectedCategoria(categoria);
+  const handleSelectDetail = (etiqueta) => {
+    setSelectedEtiqueta(etiqueta);
     setActiveView('detail');
   };
 
@@ -55,28 +55,28 @@ function Categorias() {
     e.preventDefault();
     await create(formData);
     handleCloseView();
-    fetchCategorias();
+    fetchEtiquetas();
   };
 
   const handleEdit = async (e) => {
     e.preventDefault();
-    await update(selectedCategoria.id, formData);
+    await update(selectedEtiqueta.id, formData);
     handleCloseView();
-    fetchCategorias();
+    fetchEtiquetas();
   };
 
   const handleDelete = async () => {
-    await remove(selectedCategoria.id);
+    await remove(selectedEtiqueta.id);
     handleCloseView();
-    fetchCategorias();
+    fetchEtiquetas();
   };
 
   return (
-    <CategoriasView
-      categorias={categorias}
+    <EtiquetasView
+      etiquetas={etiquetas}
       activeView={activeView}
       formData={formData}
-      selectedCategoria={selectedCategoria}
+      selectedEtiqueta={selectedEtiqueta}
       onToggleCreate={handleToggleCreate}
       onInputChange={handleInputChange}
       onCreate={handleCreate}
@@ -90,4 +90,4 @@ function Categorias() {
   );
 }
 
-export default Categorias;
+export default Etiquetas;

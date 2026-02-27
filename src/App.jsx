@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import tareaService from './services/tarea.service';
 import Categorias from './components/Categorias';
+import Etiquetas from './components/Etiquetas';
 import  './App.css';
 
 function App() {
@@ -10,29 +11,21 @@ function App() {
 
   useEffect(() => {
     const fetchTareas = async () => {
-      try {
         setLoading(true);
         const response = await tareaService.getAll();
         
-        console.log('Respuesta de la API:', response);
-        console.log('Tareas:', response.data);
-        
         setTareas(response.data);
         setError(null);
-      } catch (err) {
-        console.error('Error al cargar tareas:', err);
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
     };
 
     fetchTareas();
   }, []);
 
   return (
-      <h1>Testing Tareas</h1>,
-      <div className="App"><Categorias /></div>
+    <>
+      <div className="App"><Categorias/></div>
+      <div className="App"><Etiquetas/></div>
+      </>
   );
 }
 

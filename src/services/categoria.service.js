@@ -16,6 +16,16 @@ export const getAll = async () => {
   return data;
 };
 
+export const getOne = async () => {
+  const response = await fetch(`${API_BASE_URL}/categorias/${id}`, {
+    method: "GET",
+    headers: getHeaders(),
+  });
+
+  const data = await response.json();
+  return data;
+};
+
 export const create = async (formData) => {
   const response = await fetch(`${API_BASE_URL}/categorias`, {
     method: "POST",

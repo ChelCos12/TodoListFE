@@ -1,70 +1,92 @@
 import { useState, useEffect } from 'react';
-import { getAll } from '../services/categoria.service';
+import CategoriasView from './CategoriasSrc/CategoriasView';
+import { getAll , create, update, remove} from '../services/categoria.service';
+
+const EMPTY_FORM = { nombre: '', color: '#3498db' };
 
 function Categorias() {
   const [categorias, setCategorias] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [activeView, setActiveView] = useState(null);
+  const [selectedCategoria, setSelectedCategoria] = useState(null);
+  const [formData, setFormData] = useState(EMPTY_FORM);
 
   const fetchCategorias = async () => {
-      setLoading(true);
       const response = await getAll();
       setCategorias(response.data);
-      setError(null);
   };
 
   useEffect(() => {
     fetchCategorias();
   }, []);
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  
+  const handleCloseView = () => {
+    setActiveView(null);
+    setSelectedCategoria(null);
+    setFormData(EMPTY_FORM);
+  };
+
+  const handleToggleCreate = () => {
+    activeView === 'create' ? handleCloseView() : setActiveView('create');
+  };
+
+  const handleSelectEdit = (categoria) => {
+    setSelectedCategoria(categoria);
+    setFormData({ nombre: categoria.nombre, color: categoria.color });
+    setActiveView('edit');
+  };
+
+  const handleSelectDelete = (categoria) => {
+    setSelectedCategoria(categoria);
+    setActiveView('delete');
+  };
+
+  const handleSelectDetail = (categoria) => {
+    setSelectedCategoria(categoria);
+    setActiveView('detail');
+  };
+
+  const handleCreate = async (e) => {
+    e.preventDefault();
+    await create(formData);
+    handleCloseView();
+    fetchCategorias();
+  };
+
+  const handleEdit = async (e) => {
+    e.preventDefault();
+    await update(selectedCategoria.id, formData);
+    handleCloseView();
+    fetchCategorias();
+  };
+
+  const handleDelete = async () => {
+    await remove(selectedCategoria.id);
+    handleCloseView();
+    fetchCategorias();
+  };
+
   return (
-    <div className="categorias-container">
-      <h1>Categorías</h1>
-      
-      <table border="1" cellPadding="10" style={{ width: '100%', marginTop: '20px' }}>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Color</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {categorias.length === 0 ? (
-            <tr>
-              <td colSpan="4" style={{ textAlign: 'center' }}>
-                No hay categorías
-              </td>
-            </tr>
-          ) : (
-            categorias.map((categoria) => (
-              <tr key={categoria.id}>
-                <td>{categoria.id}</td>
-                <td>{categoria.nombre}</td>
-                <td>
-                  <span
-                    style={{
-                      backgroundColor: categoria.color,
-                      padding: '5px 10px',
-                      borderRadius: '5px',
-                      color: 'white'
-                    }}
-                  >
-                    {categoria.color}
-                  </span>
-                </td>
-                <td>
-                  <button>Ver</button>
-                  <button>Editar</button>
-                  <button>Eliminar</button>
-                </td>
-              </tr>
-            ))
-          )}
-        </tbody>
-      </table>
-    </div>
+    <CategoriasView
+      categorias={categorias}
+      activeView={activeView}
+      formData={formData}
+      selectedCategoria={selectedCategoria}
+      onToggleCreate={handleToggleCreate}
+      onInputChange={handleInputChange}
+      onCreate={handleCreate}
+      onEdit={handleEdit}
+      onDelete={handleDelete}
+      onSelectEdit={handleSelectEdit}
+      onSelectDelete={handleSelectDelete}
+      onSelectDetail={handleSelectDetail}
+      onCloseView={handleCloseView}
+    />
   );
 }
 

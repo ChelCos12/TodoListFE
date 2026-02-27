@@ -16,7 +16,7 @@ export const getAll = async () => {
   return data;
 };
 
-export const getOne = async () => {
+export const getOne = async (id) => {
   const response = await fetch(`${API_BASE_URL}/etiquetas/${id}`, {
     method: "GET",
     headers: getHeaders(),

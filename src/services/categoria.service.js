@@ -26,3 +26,14 @@ export const create = async (formData) => {
   const data = await response.json();
   return data;
 };
+
+export const update = async (id, formData) => {
+const response = await fetch(`${API_BASE_URL}/categorias/${id}`, {
+      method: 'PUT',
+      headers: getHeaders(),
+      body: JSON.stringify(formData)
+    });
+
+    const data = await response.json();
+    return data;
+};

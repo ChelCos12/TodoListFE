@@ -60,9 +60,9 @@ function CategoriasView({
                   </span>
                 </td>
                 <td>
-                  <button onClick={() => onSelectDetail(categoria, 'detail')}>Ver</button>
-                  <button onClick={() => onSelectEdit(categoria, 'edit')}>Editar</button>
-                  <button onClick={() => onSelectDelete(categoria, 'delete')}>Eliminar</button>
+                  <button onClick={() => onSelectDetail(categoria)}>Ver</button>
+                  <button onClick={() => onSelectEdit(categoria)}>Editar</button>
+                  <button onClick={() => onSelectDelete(categoria)}>Eliminar</button>
                 </td>
               </tr>
             ))
